@@ -1,0 +1,41 @@
+import React from 'react';
+
+function Home() {
+  return (
+    <div>
+        <h1>Ola k ase</h1>
+    </div>
+  );
+}
+
+export default Home;
+import React from 'react';
+import { Context } from "../store/appContext";
+import PropTypes from "prop-types";
+
+let actioncontext = null;
+let storecontext = null;
+
+const Generico = props => {
+    return (
+        <Context.Consumer>
+            {({ store, actions }) => {
+                actioncontext = actions;
+                storecontext = store;
+                return (
+                    <div className="row">
+                        <div className="col-md-12">
+                            <p>Ola k ase</p>
+                        </div>
+                    </div>
+                );
+            }}
+        </Context.Consumer>
+    );
+}
+Generico.propTypes = {
+    match: PropTypes.any,
+    history: PropTypes.any
+};
+
+export default Box;
