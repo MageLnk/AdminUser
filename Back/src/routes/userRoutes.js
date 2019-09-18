@@ -1,11 +1,28 @@
 const User = require('../models/user');
 module.exports = function (app)     {
-    app.get('/usuarios', (request, respond) => {
-        User.obtenerUsuarios((err, data) => {
+    // Todas las rutas que vienen acá, están asociadas al método GET
+    app.get('/todoslosusuarios', (request, respond) => {
+        User.obtenerTodosUsuarios((err, data) => {
+            respond.status(200).json(data)
+        })
+    });
+    app.get('/tiposdeusuario', (request, respond) => {
+        User.obtenerTiposDeUsuario((err, data) => {
+            respond.status(200).json(data)
+        })
+    });
+    app.get('/todoslostickets', (request, respond) => {
+        User.obtenerLosTickets((err, data) => {
+            respond.status(200).json(data)
+        })
+    });
+    app.get('/usuariosadministradores', (request, respond) => {
+        User.obtenerUsuariosAdministradores((err, data) => {
             respond.status(200).json(data)
         })
     });
 
+    // Todas las rutas que vienen acá, están asociadas al método POST
     app.post('/todo', (request, respond) => {
         const userData = {
             id: null,
@@ -29,6 +46,7 @@ module.exports = function (app)     {
         })
     });
 
+    // Todas las rutas que vienen acá, están asociadas al método PUT
     app.put('/todo/:id', (request, respond) => {
         const userData = {
             id: request.params.id,
@@ -46,6 +64,7 @@ module.exports = function (app)     {
         })
     });
 
+    // Todas las rutas que vienen acá, están asociadas al método DELETE
     app.delete('/todo/:id', (request, respond) => {
         User.deleteUserTodo(request.params.id, (err, data) => {
             if (data && data.msg === 'borrado' || data.msg === 'no existe') {
