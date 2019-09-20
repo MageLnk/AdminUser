@@ -1,7 +1,9 @@
 import React from 'react';
 import { Context } from "../store/appContext";
 import PropTypes from "prop-types";
+import MapUsers from "../components/mapUsersToAdmin";
 import MapTickets from "../components/mapTicketsAdmin";
+
 
 const Admin = props => {
     return (
@@ -20,13 +22,15 @@ const Admin = props => {
                             </div>
                         </div>
                         <div className="row">
-                            <div className="col-md-6 offset-2">
-                                <p>Botón de asignar</p>
-                            </div>
-                            <div className="col-md-3">
+                            <div className="col-md-3 offset-9">
                                 <button className="btn btn-danger" onClick={e => actions.logout(store, props.history)}>
                                     Volver al login
                                 </button>
+                            </div>
+                        </div>
+                        <div className="row">
+                            <div className="col-md-12">
+                                <MapUsers />
                             </div>
                         </div>
                         <div className="row">

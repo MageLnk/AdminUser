@@ -6,6 +6,7 @@ const getState = ({ getStore, setStore }) => {
 				username: "",
 				password: ""
 			},
+			botonOKASE: "Usuario",
 			estado: false,
 			inputsRegistro: {
 				id_tipousuarios: 2,
@@ -13,8 +14,12 @@ const getState = ({ getStore, setStore }) => {
 				pass: "",
 				correo: ""
 			},
+			inputTicket: {
+				ticket_pedido: ""
+			},
 			dataID: {},
-			ticketsAdmin: []
+			ticketsAdmin: [],
+			dataUsers: []
 		},
 		actions: {
 			check: (store, redirect) => {
@@ -41,6 +46,13 @@ const getState = ({ getStore, setStore }) => {
 				oldStore[name] = evento.target.value;
 				setStore({ inputsRegistro: oldStore });
 			},
+			obtenerTicket: evento => {
+				const store = getStore();
+				const name = evento.target.name;
+				let oldStore = store.inputTicket;
+				oldStore[name] = evento.target.value;
+				setStore({ inputTicket: oldStore });
+			},
 			loginUsuario: (infologin, redirect) => {
 				fetch(enlace + "logindeusuarios/", {
 					method: "Post",
@@ -55,17 +67,18 @@ const getState = ({ getStore, setStore }) => {
 					})
 					.then(resp => {
 						//console.log("Probando el resp después del json", resp);
-						setStore({ dataID: resp.data.id_usuarios });
 						if (resp.success == false) {
 							alert("Su nombre de usuario o contraseña no coinciden");
 							return;
 						}
 						if (resp.success == true) {
 							if (resp.data.id_tipousuarios == 1) {
+								setStore({ dataID: resp.data.id_usuarios });
 								setStore({ estado: true })
 								redirect.push("/administracion");
 							}
 							if (resp.data.id_tipousuarios == 2) {
+								setStore({ dataID: resp.data.id_usuarios });
 								redirect.push("/tickets/usuario");
 							}
 							return;
@@ -103,6 +116,18 @@ const getState = ({ getStore, setStore }) => {
 							ticketsAdmin: resp
 						});
 						//console.log("Lo que trae el fetch get de la lista todo", resp);
+					});
+			},
+			obtenerUsuarios: e => {
+				fetch(enlace + "todoslosusuarios/", {
+					method: "GET",
+				})
+					.then(resp => resp.json())
+					.then(resp => {
+						setStore({
+							dataUsers: resp
+						});
+						console.log("Lo que trae el fetch get de la lista todo", resp);
 					});
 			},
 		}

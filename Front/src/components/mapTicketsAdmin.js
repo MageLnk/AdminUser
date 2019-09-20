@@ -6,23 +6,20 @@ import "../styles/mapTicketsAdmin.css";
 let actioncontext = null;
 const MapTickets = props => {
     useEffect(() => {
-		actioncontext.obtenerTickets()
-	}, []);
+        actioncontext.obtenerTickets()
+    }, []);
     return (
         <Context.Consumer>
             {({ store, actions }) => {
                 actioncontext = actions;
-                const ListaTickets = store.ticketsAdmin.map((mapeo, index) => {
+                const Usuarios = store.dataUsers.map((mapeo, index) => {
                     return (
-                        <div className="contenedorcentral container" key={index}>
+                        <div className="contenedorsecundarios container" key={index}>
                             <div className="row">
-                                <div className="col-md-4 offset-5">
-                                    <h3>Ticket</h3>
-                                </div>
-                            </div>
-                            <div className="row">
-                                <div className="col-md-12">
-                                    {mapeo.ticket_pedido}
+                                <div className="col-md-3">
+                                    <button className="dropdown-item" type="button">
+                                        {mapeo.username}
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -30,8 +27,30 @@ const MapTickets = props => {
                 });
                 return (
                     <div className="row">
-                        <div className="col-md-12">
-                            {ListaTickets}
+                        <div className="col-md-6">
+                            <input
+                                type="text"
+                                className="form-control"
+                                placeholder="Ingrese ticket"
+                                name="ticket_pedido"
+                                onChange={e => actions.obtenerTicket(e)}
+                            />
+                        </div>
+                        <div className="col-md-3 offset-3">
+                            <div className="dropdown">
+                                <button
+                                    className="btn btn-info dropdown-toggle"
+                                    type="button"
+                                    id="dropdownMenu2"
+                                    data-toggle="dropdown"
+                                    aria-haspopup="true"
+                                    aria-expanded="false">
+                                    {store.botonOKASE}
+                                        </button>
+                                <div className="dropdown-menu" aria-labelledby="dropdownMenu2">
+                                    {Usuarios}
+                                </div>
+                            </div>
                         </div>
                     </div>
                 );
