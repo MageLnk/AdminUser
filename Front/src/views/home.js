@@ -1,11 +1,16 @@
 import React from 'react';
 import { Context } from "../store/appContext";
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 
 let actioncontext = null;
 let storecontext = null;
 
 const Home = props => {
+    function handleSubmit(e) {
+        e.preventDefault();
+        this.actioncontext.loginUsuario(this.storecontext.inputsLogin, this.props.history);
+    };
     return (
         <Context.Consumer>
             {({ store, actions }) => {
@@ -14,10 +19,65 @@ const Home = props => {
                 return (
                     <div className="container">
                         <div className="row">
-                            <div className="col-md-3 col-md-offset-4">
-                                <p>Ola k ase?</p>
+                            <div className="col-md-4 offset-4">
+                                <h1>Bienvenido!</h1>
+                            </div>
+                            <div className="col-md-4 offset-4">
+                                <p>Por favor, ingrese su usuario y contraseña</p>
                             </div>
                         </div>
+                        <div className="row">
+                            <div className="col-md-4 offset-4">
+                                <form onSubmit={e => handleSubmit()}>
+                                    <div className="content">
+                                        <div className="form">
+                                            <div className="form-group">
+                                                <label htmlFor="username">Username</label>
+                                                <input
+                                                    type="text"
+                                                    className="form-control"
+                                                    placeholder="Usuario"
+                                                    name="username"
+                                                    onChange={e => actions.obtenerDatosLogin(e)}
+                                                    onSubmit={e => handleSubmit()}
+                                                    required
+                                                />
+                                            </div>
+                                            <div className="form-group">
+                                                <label htmlFor="password">Password</label>
+                                                <input
+                                                    type="password"
+                                                    className="form-control"
+                                                    placeholder="Password"
+                                                    name="password"
+                                                    onChange={e => actions.obtenerDatosLogin(e)}
+                                                    onSubmit={e => handleSubmit()}
+                                                    required
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="footerLogin">
+                                        <button type="submit" className="btn btn-primary">
+                                            Login
+									    </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div className="row">
+                            <div className="col-md-4 offset-4">
+                                <p>Si no posee cuenta, por favor, haga clic en el botón</p>
+                            </div>
+                            <div className="col-md-4 offset-7">
+                                <Link to="/registro">
+                                    <button>
+                                        Ir a registro
+                                    </button>
+                                </Link>
+                            </div>
+                        </div>
+
                     </div>
                 );
             }}

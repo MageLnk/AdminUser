@@ -3,9 +3,9 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 
 import injectContext from "./store/appContext.js";
 import Home from "./views/home";
-
-// import MasterLayoutRoute from "./layout/template";
-// import VistaPrincipalRoute from "./layout/otrotemplate";
+import Registro from "./views/registro";
+import Admin from "./views/admin";
+import Usuarios from "./views/usuarios";
 
 // import { Navbar } from "./component/navbar";
 
@@ -17,10 +17,13 @@ export class Layout extends React.Component {
 		const basename = process.env.BASENAME || "";
 
 		return (
-			<div className="d-flex flex-column h-100">
+			<div className="fulldiv d-flex flex-column h-100">
 				<BrowserRouter basename={basename}>
 						<Switch>
 							<Route exact path="/" component={Home} />
+							<Route exact path="/registro" component={Registro} />
+							<Route exact path="/administracion" component={Admin} />
+							<Route exact path="/tickets/usuario" component={Usuarios} />
 							<Route render={() => <h1>Error 404!</h1>} />
 						</Switch>
 				</BrowserRouter>
