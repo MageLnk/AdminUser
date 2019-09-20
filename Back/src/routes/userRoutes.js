@@ -26,7 +26,6 @@ module.exports = function (app) {
     // Todas las rutas que vienen acá, están asociadas al método POST
     app.post('/logindeusuarios', (request, respond) => {
         const userData = {
-            id: null,
             username: request.body.username,
             password: request.body.password
         }
@@ -55,13 +54,12 @@ module.exports = function (app) {
     });
     app.post('/registrousuario', (request, respond) => {
         const userData = {
-            id: null,
+            id_usuarios: null,
             id_tipousuarios: request.body.id_tipousuarios,
             username: request.body.username,
             pass: request.body.pass,
             correo: request.body.correo
         }
-        console.log("Probando userData", userData);
         User.registroUsuarios(userData, (err, data) => {
             if (data && data.insertId) {
                 respond.json({

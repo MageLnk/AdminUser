@@ -5,9 +5,26 @@ const getState = ({ getStore, setStore }) => {
 			inputsLogin: {
 				username: "",
 				password: ""
+			},
+			estado: false,
+			inputsRegistro: {
+				id_tipousuarios: 2,
+				username: "",
+				pass: "",
+				correo: ""
 			}
 		},
 		actions: {
+			check: (store, redirect) => {
+				if (store.estado == false) {
+					redirect.push("/");
+				}
+			},
+			logout: (store, redirect) => {
+				console.log(store)
+				setStore({estado : false})
+				redirect.push("/");
+			},
 			obtenerDatosLogin: evento => {
 				const store = getStore();
 				const name = evento.target.name;
@@ -15,8 +32,14 @@ const getState = ({ getStore, setStore }) => {
 				oldStore[name] = evento.target.value;
 				setStore({ inputsLogin: oldStore });
 			},
-			loginUsuario: (infologin, redirect) => {
+			obtenerDatosRegistro: evento => {
 				const store = getStore();
+				const name = evento.target.name;
+				let oldStore = store.inputsRegistro;
+				oldStore[name] = evento.target.value;
+				setStore({ inputsRegistro: oldStore });
+			},
+			loginUsuario: (infologin, redirect) => {
 				fetch(enlace + "logindeusuarios/", {
 					method: "Post",
 					body: JSON.stringify(infologin),
@@ -36,6 +59,7 @@ const getState = ({ getStore, setStore }) => {
 						}
 						if (resp.success == true) {
 							if (resp.data.id_tipousuarios == 1) {
+								setStore({ estado: true })
 								redirect.push("/administracion");
 							}
 							if (resp.data.id_tipousuarios == 2) {
@@ -44,6 +68,28 @@ const getState = ({ getStore, setStore }) => {
 							return;
 						}
 						//console.log("Acá debería estar todo lo que responde el fetch del login", resp);
+					});
+			},
+			registrarUsuario: (infologin, redirect) => {
+				fetch(enlace + "registrousuario/", {
+					method: "Post",
+					body: JSON.stringify(infologin),
+					headers: {
+						"Content-Type": "application/json"
+					}
+				})
+					.then(resp => {
+						return resp.json();
+					})
+					.then(resp => {
+						if (resp.success == false) {
+							alert("Ocurrió un problema con el servidor");
+							return;
+						}
+						if (resp.success == true) {
+							redirect.push("/");
+							return;
+						}
 					});
 			}
 		}

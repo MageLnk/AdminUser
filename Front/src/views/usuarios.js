@@ -2,19 +2,32 @@ import React from 'react';
 import { Context } from "../store/appContext";
 import PropTypes from "prop-types";
 
-let actioncontext = null;
-let storecontext = null;
-
 const Usuarios = props => {
     return (
         <Context.Consumer>
             {({ store, actions }) => {
-                actioncontext = actions;
-                storecontext = store;
+                actions.check(store, props.history)
                 return (
-                    <div className="row">
-                        <div className="col-md-12">
-                            <p>Ola k ase - acá se verán los ticets del usuario</p>
+                    <div className="container">
+                        <div className="row">
+                            <div className="col-md-12">
+                                <h1>Bienvenido al panel de usuarios</h1>
+                            </div>
+                            <div className="col-md-12">
+                                <p>Acá podrá ver todos los tickets, y los asignados a Ud.</p>
+                            </div>
+                        </div>
+                        <div className="row">
+                            <div className="col-md-3 offset-5">
+                                <button className="btn btn-danger" onClick={e => actions.logout(store, props.history)}>
+                                    Volver al login
+                                </button>
+                            </div>
+                        </div>
+                        <div className="row">
+                            <div className="col-md-12">
+                                <p>Tickets</p>
+                            </div>
                         </div>
                     </div>
                 );

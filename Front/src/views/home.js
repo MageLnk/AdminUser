@@ -64,9 +64,9 @@ const Home = props => {
                             <div className="col-md-4 offset-4">
                                 <p>Si no posee cuenta, por favor, haga clic en el botón</p>
                             </div>
-                            <div className="col-md-4 offset-7">
+                            <div className="col-md-4 offset-5">
                                 <Link to="/registro">
-                                    <button>
+                                    <button className="btn btn-success">
                                         Ir a registro
                                     </button>
                                 </Link>

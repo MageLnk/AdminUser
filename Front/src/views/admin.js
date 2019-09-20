@@ -1,17 +1,12 @@
 import React from 'react';
 import { Context } from "../store/appContext";
 import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
-
-let actioncontext = null;
-let storecontext = null;
 
 const Admin = props => {
     return (
         <Context.Consumer>
             {({ store, actions }) => {
-                actioncontext = actions;
-                storecontext = store;
+                actions.check(store, props.history)
                 return (
                     <div className="container">
                         <div className="row">
@@ -27,11 +22,9 @@ const Admin = props => {
                                 <p>Botón de asignar</p>
                             </div>
                             <div>
-                                <Link to="/">
-                                    <button className="btn btn-danger">
-                                        Volver al login
-                                    </button>
-                                </Link>
+                                <button className="btn btn-danger" onClick={e => actions.logout(store, props.history)}>
+                                    Volver al login
+                                </button>
                             </div>
                         </div>
                         <div className="row">
@@ -44,6 +37,7 @@ const Admin = props => {
             }}
         </Context.Consumer>
     );
+
 }
 Admin.propTypes = {
     match: PropTypes.any,
