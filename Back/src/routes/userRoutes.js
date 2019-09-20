@@ -75,6 +75,28 @@ module.exports = function (app) {
             }
         })
     });
+    app.post('/agregarticket', (request, respond) => {
+        const userData = {
+            id_ticket: null,
+            id_usuarios: request.body.id_usuarios,
+            ticket_pedido: request.body.ticket_pedido
+        }
+        console.log("Probando userData", userData);
+        User.ingresarTicket(userData, (err, data) => {
+            if (data && data.insertId) {
+                respond.json({
+                    success: true,
+                    msg: 'Usuario creado',
+                    data: data
+                })
+            } else {
+                respond.status(500).json({
+                    success: false,
+                    msg: 'Error'
+                })
+            }
+        })
+    });
 
     // Todas las rutas que vienen acá, están asociadas al método PUT
     app.put('/todo/:id', (request, respond) => {

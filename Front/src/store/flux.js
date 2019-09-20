@@ -12,7 +12,9 @@ const getState = ({ getStore, setStore }) => {
 				username: "",
 				pass: "",
 				correo: ""
-			}
+			},
+			dataID: {},
+			ticketsAdmin: []
 		},
 		actions: {
 			check: (store, redirect) => {
@@ -53,6 +55,7 @@ const getState = ({ getStore, setStore }) => {
 					})
 					.then(resp => {
 						//console.log("Probando el resp después del json", resp);
+						setStore({ dataID: resp.data.id_usuarios });
 						if (resp.success == false) {
 							alert("Su nombre de usuario o contraseña no coinciden");
 							return;
@@ -78,9 +81,7 @@ const getState = ({ getStore, setStore }) => {
 						"Content-Type": "application/json"
 					}
 				})
-					.then(resp => {
-						return resp.json();
-					})
+					.then(resp => resp.json())
 					.then(resp => {
 						if (resp.success == false) {
 							alert("Ocurrió un problema con el servidor");
@@ -91,7 +92,19 @@ const getState = ({ getStore, setStore }) => {
 							return;
 						}
 					});
-			}
+			},
+			obtenerTickets: e => {
+				fetch(enlace + "todoslostickets/", {
+					method: "GET",
+				})
+					.then(resp => resp.json())
+					.then(resp => {
+						setStore({
+							ticketsAdmin: resp
+						});
+						//console.log("Lo que trae el fetch get de la lista todo", resp);
+					});
+			},
 		}
 	};
 };

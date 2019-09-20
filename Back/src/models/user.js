@@ -98,6 +98,22 @@ userModel.registroUsuarios = (userData, callback) => {
         )
     }
 };
+userModel.ingresarTicket = (userData, callback) => {
+    if (connection){
+        connection.query(
+            'INSERT INTO ticket SET ?', userData,
+            (err, result) => {
+                if (err){
+                    throw err;
+                } else {
+                    callback(null, {
+                        'insertId': result.insertId
+                    })
+                }
+            }
+        )
+    }
+};
 
 // Las siguienes funciones, son para editar información a través de método PUT
 userModel.updateUser = (userData, callback) => {

@@ -6,7 +6,8 @@ const Usuarios = props => {
     return (
         <Context.Consumer>
             {({ store, actions }) => {
-                actions.check(store, props.history)
+                //Validador de usuario logeado
+                //actions.check(store, props.history)
                 return (
                     <div className="container">
                         <div className="row">
