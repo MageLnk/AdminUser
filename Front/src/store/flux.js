@@ -15,33 +15,33 @@ const getState = ({ getStore, setStore }) => {
 				oldStore[name] = evento.target.value;
 				setStore({ inputsLogin: oldStore });
 			},
-			loginUsuario: (contacto, redirect) => {
+			loginUsuario: (infologin, redirect) => {
 				const store = getStore();
-				fetch(enlace + "/api/token/", {
+				fetch(enlace + "logindeusuarios/", {
 					method: "Post",
-					body: JSON.stringify(contacto),
+					body: JSON.stringify(infologin),
 					headers: {
 						"Content-Type": "application/json"
 					}
 				})
 					.then(resp => {
 						//console.log("resp sin json", resp);
-						if (resp.ok === true) {
-							setStore({
-								InputsLoginBeta: resp.ok
-							});
-						}
-						//console.log("Debería guardar el response.ok, true o false", store.InputsLoginBeta);
 						return resp.json();
 					})
 					.then(resp => {
-						setStore({
-							InputsToken: resp
-						});
-						if (store.InputsLoginBeta === true) {
-							redirect.push("/");
-						} else {
+						//console.log("Probando el resp después del json", resp);
+						if (resp.success == false) {
 							alert("Su nombre de usuario o contraseña no coinciden");
+							return;
+						}
+						if (resp.success == true) {
+							if (resp.data.id_tipousuarios == 1) {
+								redirect.push("/administracion");
+							}
+							if (resp.data.id_tipousuarios == 2) {
+								redirect.push("/tickets/usuario");
+							}
+							return;
 						}
 						//console.log("Acá debería estar todo lo que responde el fetch del login", resp);
 					});

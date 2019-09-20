@@ -67,9 +67,22 @@ userModel.obtenerUsuariosAdministradores = (callback) =>{
         )
     }
 };
-
+userModel.loginDeUsuario = (callback) =>{
+    if (connection) {
+        connection.query(
+            `SELECT * FROM usuarios`,
+            (err, rows) => {
+                if (err) {
+                    throw err;
+                } else {
+                    callback(null, rows);
+                }
+            }
+        )
+    }
+};
 // Las siguientes funciones, son para guardar información a través de método POST
-userModel.insertUser = (userData, callback) => {
+userModel.registroUsuarios = (userData, callback) => {
     if (connection){
         connection.query(
             'INSERT INTO usuarios SET ?', userData,

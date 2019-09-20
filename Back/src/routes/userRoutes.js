@@ -1,5 +1,6 @@
 const User = require('../models/user');
-module.exports = function (app)     {
+module.exports = function (app) {
+
     // Todas las rutas que vienen acá, están asociadas al método GET
     app.get('/todoslosusuarios', (request, respond) => {
         User.obtenerTodosUsuarios((err, data) => {
@@ -23,18 +24,49 @@ module.exports = function (app)     {
     });
 
     // Todas las rutas que vienen acá, están asociadas al método POST
-    app.post('/todo', (request, respond) => {
+    app.post('/logindeusuarios', (request, respond) => {
         const userData = {
             id: null,
-            usernametodo: request.body.usernametodo,
-            time: request.body.time,
-            estado: request.body.estado
+            username: request.body.username,
+            password: request.body.password
         }
-        User.insertTodoUser(userData, (err, data) => {
+        //console.log("Probando el userData", userData);
+        User.loginDeUsuario((err, data) => {
+            //console.log("Probando el data sin json", data);
+            //console.log("Probando el err", err);
+            for (let i = 0; i < data.length; i++) {
+                //console.log("Probando el data con el for de iterador", data[i]);
+                //console.log("Probando el data con el for de iterador en un solo valor", data[i].username);
+                //console.log("Probando el userData dentro del for", userData.username)
+                if (userData.username == data[i].username && userData.password == data[i].pass) {
+                    respond.status(200).json({
+                        success: true,
+                        msg: 'Usuario existe',
+                        data: data[i]
+                    })
+                    return;
+                }
+            }
+            respond.status(500).json({
+                success: false,
+                msg: 'Error'
+            })
+        })
+    });
+    app.post('/registrousuario', (request, respond) => {
+        const userData = {
+            id: null,
+            id_tipousuarios: request.body.id_tipousuarios,
+            username: request.body.username,
+            pass: request.body.pass,
+            correo: request.body.correo
+        }
+        console.log("Probando userData", userData);
+        User.registroUsuarios(userData, (err, data) => {
             if (data && data.insertId) {
                 respond.json({
                     success: true,
-                    msg: 'Todo creado',
+                    msg: 'Usuario creado',
                     data: data
                 })
             } else {
@@ -53,9 +85,9 @@ module.exports = function (app)     {
             estado: request.body.estado,
         }
         User.updateUserTodo(userData, (err, data) => {
-            if (data && data.msg){
+            if (data && data.msg) {
                 respond.json(data)
-            } else{
+            } else {
                 respond.json({
                     success: false,
                     msg: 'error'

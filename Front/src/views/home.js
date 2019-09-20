@@ -3,19 +3,14 @@ import { Context } from "../store/appContext";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 
-let actioncontext = null;
-let storecontext = null;
-
 const Home = props => {
-    function handleSubmit(e) {
+    function handleSubmit(e, actions, store, props) {
         e.preventDefault();
-        this.actioncontext.loginUsuario(this.storecontext.inputsLogin, this.props.history);
+        actions.loginUsuario(store.inputsLogin, props.history);
     };
     return (
         <Context.Consumer>
             {({ store, actions }) => {
-                actioncontext = actions;
-                storecontext = store;
                 return (
                     <div className="container">
                         <div className="row">
@@ -28,7 +23,7 @@ const Home = props => {
                         </div>
                         <div className="row">
                             <div className="col-md-4 offset-4">
-                                <form onSubmit={e => handleSubmit()}>
+                                <form onSubmit={e => handleSubmit(e, actions, store, props)}>
                                     <div className="content">
                                         <div className="form">
                                             <div className="form-group">
