@@ -139,15 +139,42 @@ userModel.updateUser = (userData, callback) => {
 }
 
 // Las siguientes funciones, son para borrar información a través de método DELETE
-userModel.deleteUser = (id, callback) => {
+userModel.borrarTicket = (id, callback) => {
     if (connection) {
         let sql = `
-            SELECT * FROM users WHERE id = ${connection.escape(id)}
+            SELECT * FROM ticket WHERE id_ticket = ${connection.escape(id)}
         `;
         connection.query(sql, (err, row) => {
             if (row){
                 let sql = `
-                DELETE FROM users WHERE id = ${id}
+                DELETE FROM ticket WHERE id_ticket = ${id}
+                `;
+                connection.query(sql, (err, result) => {
+                    if (err) {
+                        throw err;
+                    } else {
+                        callback (null, {
+                            msg: 'borrado'
+                        })
+                    }
+                })
+            } else {
+                callback(null, {
+                    msg: 'no existe'
+                })
+            }
+        })
+    }
+}
+userModel.borrarUsuario = (id, callback) => {
+    if (connection) {
+        let sql = `
+            SELECT * FROM usuarios WHERE id_usuarios = ${connection.escape(id)}
+        `;
+        connection.query(sql, (err, row) => {
+            if (row){
+                let sql = `
+                DELETE FROM usuarios WHERE id_usuarios = ${id}
                 `;
                 connection.query(sql, (err, result) => {
                     if (err) {

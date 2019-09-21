@@ -86,7 +86,7 @@ module.exports = function (app) {
             if (data && data.insertId) {
                 respond.json({
                     success: true,
-                    msg: 'Usuario creado',
+                    msg: 'Ticket creado',
                     data: data
                 })
             } else {
@@ -117,8 +117,22 @@ module.exports = function (app) {
     });
 
     // Todas las rutas que vienen acá, están asociadas al método DELETE
-    app.delete('/todo/:id', (request, respond) => {
-        User.deleteUserTodo(request.params.id, (err, data) => {
+    app.delete('/ticket/:id', (request, respond) => {
+        User.borrarTicket(request.params.id, (err, data) => {
+            if (data && data.msg === 'borrado' || data.msg === 'no existe') {
+                respond.json({
+                    success: true,
+                    data
+                })
+            } else {
+                respond.status(500).json({
+                    msg: 'Error'
+                })
+            }
+        })
+    });
+    app.delete('/usuario/:id', (request, respond) => {
+        User.borrarUsuario(request.params.id, (err, data) => {
             if (data && data.msg === 'borrado' || data.msg === 'no existe') {
                 respond.json({
                     success: true,
