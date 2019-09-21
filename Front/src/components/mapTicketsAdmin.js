@@ -17,7 +17,7 @@ const MapTickets = props => {
                         <div className="contenedorsecundarios container" key={index}>
                             <div className="row">
                                 <div className="col-md-3">
-                                    <button className="dropdown-item" type="button">
+                                    <button className="dropdown-item" type="button" onClick={e => actions.auxiliarUser(mapeo)}>
                                         {mapeo.username}
                                     </button>
                                 </div>

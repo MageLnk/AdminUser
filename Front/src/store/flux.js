@@ -2,11 +2,12 @@ const enlace = "http://localhost:3000/"
 const getState = ({ getStore, setStore }) => {
 	return {
 		store: {
+			auxUser: {},
 			inputsLogin: {
 				username: "",
 				password: ""
 			},
-			botonOKASE: "Usuario",
+			botonOKASE: "Usuarios",
 			estado: false,
 			inputsRegistro: {
 				id_tipousuarios: 2,
@@ -22,6 +23,10 @@ const getState = ({ getStore, setStore }) => {
 			dataUsers: []
 		},
 		actions: {
+			auxiliarUser: info => {
+				setStore({ auxUser: info });
+				setStore({ botonOKASE:info.username })
+			},
 			check: (store, redirect) => {
 				if (store.estado == false) {
 					redirect.push("/");
@@ -127,7 +132,7 @@ const getState = ({ getStore, setStore }) => {
 						setStore({
 							dataUsers: resp
 						});
-						console.log("Lo que trae el fetch get de la lista todo", resp);
+						//console.log("Lo que trae el fetch get de la lista todo", resp);
 					});
 			},
 		}
