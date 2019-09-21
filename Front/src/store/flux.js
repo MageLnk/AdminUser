@@ -2,7 +2,7 @@ const enlace = "http://localhost:3000/"
 const getState = ({ getStore, setStore }) => {
 	return {
 		store: {
-			auxUser: {},
+			auxUser: "",
 			inputsLogin: {
 				username: "",
 				password: ""
@@ -16,11 +16,12 @@ const getState = ({ getStore, setStore }) => {
 				correo: ""
 			},
 			inputTicket: {
+				id_usuarios: "",
 				ticket_pedido: ""
 			},
 			dataID: {},
 			ticketsAdmin: [],
-			dataUsers: []
+			dataUsers: [],
 		},
 		actions: {
 			auxiliarUser: info => {
@@ -33,8 +34,29 @@ const getState = ({ getStore, setStore }) => {
 				}
 			},
 			logout: (store, redirect) => {
-				console.log(store)
-				setStore({estado : false})
+				//console.log(store)
+				setStore({
+						auxUser: "",
+						inputsLogin: {
+							username: "",
+							password: ""
+						},
+						botonOKASE: "Usuarios",
+						estado: false,
+						inputsRegistro: {
+							id_tipousuarios: 2,
+							username: "",
+							pass: "",
+							correo: ""
+						},
+						inputTicket: {
+							id_usuarios: "",
+							ticket_pedido: ""
+						},
+						dataID: {},
+						ticketsAdmin: [],
+						dataUsers: [],
+				})
 				redirect.push("/");
 			},
 			obtenerDatosLogin: evento => {
@@ -57,6 +79,30 @@ const getState = ({ getStore, setStore }) => {
 				let oldStore = store.inputTicket;
 				oldStore[name] = evento.target.value;
 				setStore({ inputTicket: oldStore });
+			},
+			obtenerTickets: e => {
+				fetch(enlace + "todoslostickets/", {
+					method: "GET",
+				})
+					.then(resp => resp.json())
+					.then(resp => {
+						setStore({
+							ticketsAdmin: resp
+						});
+						//console.log("Lo que trae el fetch get de la lista todo", resp);
+					});
+			},
+			obtenerUsuarios: e => {
+				fetch(enlace + "todoslosusuarios/", {
+					method: "GET",
+				})
+					.then(resp => resp.json())
+					.then(resp => {
+						setStore({
+							dataUsers: resp
+						});
+						//console.log("Lo que trae el fetch get de la lista todo", resp);
+					});
 			},
 			loginUsuario: (infologin, redirect) => {
 				fetch(enlace + "logindeusuarios/", {
@@ -111,29 +157,49 @@ const getState = ({ getStore, setStore }) => {
 						}
 					});
 			},
-			obtenerTickets: e => {
-				fetch(enlace + "todoslostickets/", {
-					method: "GET",
+			generarTickets: (infologin, redirect) => {
+				const store = getStore();
+				console.log("Info login", infologin);
+				console.log("AuxUser", store.auxUser);
+				if (store.auxUser == ""){
+					alert("Debe elegir un usuario al cual asignar")
+					return;
+				}
+				let aux = store.auxUser.id_usuarios;
+				let oldStore = store.inputTicket
+				setStore({
+					
+				})
+				console.log("probando aux", aux);
+				fetch(enlace + "/agregarticket/", {
+					method: "Post",
+					body: JSON.stringify(infologin),
+					headers: {
+						"Content-Type": "application/json"
+					}
 				})
 					.then(resp => resp.json())
 					.then(resp => {
-						setStore({
-							ticketsAdmin: resp
-						});
-						//console.log("Lo que trae el fetch get de la lista todo", resp);
+						if (resp.success == false) {
+							alert("Ocurrió un problema con el servidor");
+							return;
+						}
+						if (resp.success == true) {
+							redirect.push("/");
+							return;
+						}
 					});
+
 			},
-			obtenerUsuarios: e => {
-				fetch(enlace + "todoslosusuarios/", {
-					method: "GET",
-				})
-					.then(resp => resp.json())
-					.then(resp => {
-						setStore({
-							dataUsers: resp
-						});
-						//console.log("Lo que trae el fetch get de la lista todo", resp);
-					});
+			borrarTicket: (contactoid, redirect, actions) => {
+				fetch(enlace + "ticket/" + contactoid, {
+					method: "DELETE",
+				}).then(resp => {
+					if (resp.ok) {
+						actions.obtenerTickets();
+						alert("El ticket ha sido borrado con éxito");
+					}
+				});
 			},
 		}
 	};

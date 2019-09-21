@@ -27,7 +27,7 @@ const MapTickets = props => {
                 });
                 return (
                     <div className="row">
-                        <div className="col-md-6">
+                        <div className="col-md-5">
                             <input
                                 type="text"
                                 className="form-control"
@@ -36,7 +36,12 @@ const MapTickets = props => {
                                 onChange={e => actions.obtenerTicket(e)}
                             />
                         </div>
-                        <div className="col-md-3 offset-3">
+                        <div className="col-md-3">
+                            <button className="btn btn-primary" onClick={e => actions.generarTickets(store.inputTicket, props.history)}>
+                                Enviar ticket
+                            </button>
+                        </div>
+                        <div className="col-md-3 offset-1">
                             <div className="dropdown">
                                 <button
                                     className="btn btn-info dropdown-toggle"

@@ -1,12 +1,13 @@
 import React, { useEffect } from 'react';
+import { FaTrashAlt } from 'react-icons/fa';
 import { Context } from "../store/appContext";
 import PropTypes from "prop-types";
 
 let actioncontext = null;
 const MapUsers = props => {
     useEffect(() => {
-		actioncontext.obtenerUsuarios()
-	}, []);
+        actioncontext.obtenerUsuarios()
+    }, []);
     return (
         <Context.Consumer>
             {({ store, actions }) => {
@@ -19,9 +20,16 @@ const MapUsers = props => {
                                     <h3>Ticket</h3>
                                 </div>
                             </div>
-                            <div className="row">
-                                <div className="col-md-12">
-                                    {mapeo.ticket_pedido}
+                            <div className="container">
+                                <div className="row">
+                                    <div className="col-md-12">
+                                        {mapeo.ticket_pedido}
+                                    </div>
+                                </div>
+                                <div className="row">
+                                    <div className="col-md-3">
+                                        <p onClick={e => actions.borrarTicket(mapeo.id_ticket, props.history, actions)}><FaTrashAlt /></p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
