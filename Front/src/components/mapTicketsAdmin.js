@@ -8,6 +8,10 @@ const MapTickets = props => {
     useEffect(() => {
         actioncontext.obtenerTickets()
     }, []);
+    function handleSubmit(e, actions, store, props) {
+        e.preventDefault();
+        actions.generarTickets(store.inputTicket, props.history, actions);
+    };
     return (
         <Context.Consumer>
             {({ store, actions }) => {
@@ -26,37 +30,42 @@ const MapTickets = props => {
                     );
                 });
                 return (
-                    <div className="row">
-                        <div className="col-md-5">
-                            <input
-                                type="text"
-                                className="form-control"
-                                placeholder="Ingrese ticket"
-                                name="ticket_pedido"
-                                onChange={e => actions.obtenerTicket(e)}
-                            />
-                        </div>
-                        <div className="col-md-3">
-                            <button className="btn btn-primary" onClick={e => actions.generarTickets(store.inputTicket, props.history, actions)}>
-                                Enviar ticket
-                            </button>
-                        </div>
-                        <div className="col-md-3 offset-1">
-                            <div className="dropdown">
-                                <button
-                                    className="btn btn-info dropdown-toggle"
-                                    type="button"
-                                    id="dropdownMenu2"
-                                    data-toggle="dropdown"
-                                    aria-haspopup="true"
-                                    aria-expanded="false">
-                                    {store.botonOKASE}
+                    <div className="container">
+                        <form onSubmit={e => handleSubmit(e, actions, store, props)}>
+                            <div className="row">
+                                <div className="col-md-5">
+                                    <input
+                                        type="text"
+                                        className="form-control"
+                                        placeholder="Ingrese ticket"
+                                        name="ticket_pedido"
+                                        onChange={e => actions.obtenerTicket(e)}
+                                        required
+                                    />
+                                </div>
+                                <div className="col-md-3 offset-1">
+                                    <div className="dropdown">
+                                        <button
+                                            className="btn btn-info dropdown-toggle"
+                                            type="button"
+                                            id="dropdownMenu2"
+                                            data-toggle="dropdown"
+                                            aria-haspopup="true"
+                                            aria-expanded="false">
+                                            {store.botonOKASE}
                                         </button>
-                                <div className="dropdown-menu" aria-labelledby="dropdownMenu2">
-                                    {Usuarios}
+                                        <div className="dropdown-menu" aria-labelledby="dropdownMenu2">
+                                            {Usuarios}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="col-md-3">
+                                    <button className="btn btn-primary" type="submit">
+                                        Enviar ticket
+                                    </button>
                                 </div>
                             </div>
-                        </div>
+                        </form>
                     </div>
                 );
             }}

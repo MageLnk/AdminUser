@@ -6,7 +6,7 @@ import PropTypes from "prop-types";
 let actioncontext = null;
 const MapUsers = props => {
     useEffect(() => {
-        actioncontext.obtenerUsuarios()
+        actioncontext.obtenerUsuarios();
     }, []);
     return (
         <Context.Consumer>
@@ -22,13 +22,19 @@ const MapUsers = props => {
                             </div>
                             <div className="container">
                                 <div className="row">
-                                    <div className="col-md-12">
+                                    <div className="col-md-6">
                                         {mapeo.ticket_pedido}
+                                    </div>
+                                    <div className="col-md-3 offset-3">
+                                        <p>Este ticket es de:</p>
                                     </div>
                                 </div>
                                 <div className="row">
                                     <div className="col-md-3">
                                         <p onClick={e => actions.borrarTicket(mapeo.id_ticket, props.history, actions)}><FaTrashAlt /></p>
+                                    </div>
+                                    <div className="col-md-3 offset-6">
+                                       <p onLoad={e => actions.userCompare(mapeo, store.dataUsers)}>{store.resultCompare}</p>
                                     </div>
                                 </div>
                             </div>
