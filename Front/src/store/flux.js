@@ -21,8 +21,8 @@ const getState = ({ getStore, setStore }) => {
 			},
 			dataID: {},
 			ticketsAdmin: [],
-			dataUsers: [],
-			resultCompare: ""
+			dataUsers: []
+			//resultCompare: []
 		},
 		actions: {
 			auxiliarUser: info => {
@@ -60,16 +60,16 @@ const getState = ({ getStore, setStore }) => {
 				})
 				redirect.push("/");
 			},
-			userCompare: (infoTicket, infoUser) => {
+/*			userCompare: (infoTicket, infoUser) => {
 				let store = getStore();
 				for (let i = 0; i < infoUser.length; i++) {
 					if(infoUser[i].id_usuarios == infoTicket.id_usuarios){
 						setStore({ resultCompare : infoUser[i].username })
-						console.log(store.resultCompare);
-						return;
+						console.log("Resultcompare", store.resultCompare);
+						return infoUser[i].username
 					}
 				}
-			},
+			},*/
 			obtenerDatosLogin: evento => {
 				const store = getStore();
 				const name = evento.target.name;

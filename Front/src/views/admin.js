@@ -1,7 +1,7 @@
 import React from 'react';
 import { Context } from "../store/appContext";
 import PropTypes from "prop-types";
-import MapUsers from "../components/mapUsersToAdmin";
+import MapUsers from "../components/interiorMap";
 import MapTickets from "../components/mapTicketsAdmin";
 
 

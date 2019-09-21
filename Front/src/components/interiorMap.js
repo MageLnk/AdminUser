@@ -8,6 +8,13 @@ const MapUsers = props => {
     useEffect(() => {
         actioncontext.obtenerUsuarios();
     }, []);
+    function userCompare(infoTicket, infoUser){
+        for (let i = 0; i < infoUser.length; i++) {
+            if(infoUser[i].id_usuarios == infoTicket.id_usuarios){
+                return infoUser[i].username
+            }
+        }
+    }
     return (
         <Context.Consumer>
             {({ store, actions }) => {
@@ -22,11 +29,11 @@ const MapUsers = props => {
                             </div>
                             <div className="container">
                                 <div className="row">
-                                    <div className="col-md-6">
+                                    <div className="col-md-5">
                                         {mapeo.ticket_pedido}
                                     </div>
-                                    <div className="col-md-3 offset-3">
-                                        <p>Este ticket es de:</p>
+                                    <div className="col-md-4 offset-3">
+                                        <p>Este ticket es del usuario:</p>
                                     </div>
                                 </div>
                                 <div className="row">
@@ -34,7 +41,7 @@ const MapUsers = props => {
                                         <p onClick={e => actions.borrarTicket(mapeo.id_ticket, props.history, actions)}><FaTrashAlt /></p>
                                     </div>
                                     <div className="col-md-3 offset-6">
-                                       <p onLoad={e => actions.userCompare(mapeo, store.dataUsers)}>{store.resultCompare}</p>
+                                       <p>{userCompare(mapeo, store.dataUsers)}</p>
                                     </div>
                                 </div>
                             </div>
