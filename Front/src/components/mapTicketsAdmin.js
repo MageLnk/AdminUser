@@ -37,7 +37,7 @@ const MapTickets = props => {
                             />
                         </div>
                         <div className="col-md-3">
-                            <button className="btn btn-primary" onClick={e => actions.generarTickets(store.inputTicket, props.history)}>
+                            <button className="btn btn-primary" onClick={e => actions.generarTickets(store.inputTicket, props.history, actions)}>
                                 Enviar ticket
                             </button>
                         </div>

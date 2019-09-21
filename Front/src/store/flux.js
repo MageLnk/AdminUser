@@ -26,7 +26,7 @@ const getState = ({ getStore, setStore }) => {
 		actions: {
 			auxiliarUser: info => {
 				setStore({ auxUser: info });
-				setStore({ botonOKASE:info.username })
+				setStore({ botonOKASE: info.username })
 			},
 			check: (store, redirect) => {
 				if (store.estado == false) {
@@ -36,26 +36,26 @@ const getState = ({ getStore, setStore }) => {
 			logout: (store, redirect) => {
 				//console.log(store)
 				setStore({
-						auxUser: "",
-						inputsLogin: {
-							username: "",
-							password: ""
-						},
-						botonOKASE: "Usuarios",
-						estado: false,
-						inputsRegistro: {
-							id_tipousuarios: 2,
-							username: "",
-							pass: "",
-							correo: ""
-						},
-						inputTicket: {
-							id_usuarios: "",
-							ticket_pedido: ""
-						},
-						dataID: {},
-						ticketsAdmin: [],
-						dataUsers: [],
+					auxUser: "",
+					inputsLogin: {
+						username: "",
+						password: ""
+					},
+					botonOKASE: "Usuarios",
+					estado: false,
+					inputsRegistro: {
+						id_tipousuarios: 2,
+						username: "",
+						pass: "",
+						correo: ""
+					},
+					inputTicket: {
+						id_usuarios: "",
+						ticket_pedido: ""
+					},
+					dataID: {},
+					ticketsAdmin: [],
+					dataUsers: [],
 				})
 				redirect.push("/");
 			},
@@ -157,21 +157,16 @@ const getState = ({ getStore, setStore }) => {
 						}
 					});
 			},
-			generarTickets: (infologin, redirect) => {
+			generarTickets: (infologin, redirect, actions) => {
 				const store = getStore();
-				console.log("Info login", infologin);
-				console.log("AuxUser", store.auxUser);
-				if (store.auxUser == ""){
+				if (store.auxUser == "") {
 					alert("Debe elegir un usuario al cual asignar")
 					return;
 				}
-				let aux = store.auxUser.id_usuarios;
 				let oldStore = store.inputTicket
-				setStore({
-					
-				})
-				console.log("probando aux", aux);
-				fetch(enlace + "/agregarticket/", {
+				oldStore.id_usuarios = store.auxUser.id_usuarios;
+				setStore({ inputTicket: oldStore })
+				fetch(enlace + "agregarticket/", {
 					method: "Post",
 					body: JSON.stringify(infologin),
 					headers: {
@@ -185,7 +180,7 @@ const getState = ({ getStore, setStore }) => {
 							return;
 						}
 						if (resp.success == true) {
-							redirect.push("/");
+							actions.obtenerTickets();
 							return;
 						}
 					});
