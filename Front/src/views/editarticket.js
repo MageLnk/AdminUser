@@ -1,34 +1,50 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Context } from "../store/appContext";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import "../styles/editarticket.css";
 
-let storecontext = null;
+let actioncontext = null;
+let storecontext = null
 
 const EditarTickets = props => {
-    let aux = "";
+/*    let aux = "";
     let auxfinal = "";
     function match() {
         for (let i = 0; i < storecontext.ticketsAdmin.length; i++) {
             let aux = storecontext.ticketsAdmin[i];
-            if (aux.id_ticket == props.match.params.id) {
+            if (aux.id_ticket === props.match.params.id) {
                 auxfinal = aux;
                 return;
             }
         }
     }
+*/
+function value(ID, store, actions) {
+    for (let i = 0; i < store.ticketsAdmin.length; i++) {
+        let aux = store.ticketsAdmin[i];
+        if (aux.id_ticket == ID.params.id) {
+            actions.valueAux(aux.ticket_pedido)
+            return;
+        }
+    }
+    console.log("ID", ID.params.id);
+
+}
     function handleSubmit(e, actions, store, props) {
         e.preventDefault();
         actions.editarTickets(store.inputTicket, props.history, actions, props.match);
     };
+    useEffect(() => {
+        value(props.match, storecontext, actioncontext);
+    }, []);
     return (
         <Context.Consumer>
             {({ store, actions }) => {
+                actioncontext = actions;
                 storecontext = store;
                 //Validador de usuario logeado
                 actions.check(store, props.history);
-                match();
                 const Usuarios = store.dataUsers.map((mapeo, index) => {
                     return (
                         <div className="contenedorsecundarios container" key={index}>
@@ -81,6 +97,7 @@ const EditarTickets = props => {
                                                 name="ticket_pedido"
                                                 onChange={e => actions.obtenerTicket(e)}
                                                 required
+                                                value={store.valuePower}
                                             />
                                         </div>
                                         <div className="col-md-3 offset-1">

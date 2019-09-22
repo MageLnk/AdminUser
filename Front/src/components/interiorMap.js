@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react';
 import { Context } from "../store/appContext";
 import PropTypes from "prop-types";
-import { FaTrashAlt, FaEdit } from 'react-icons/fa';
+import { FaEdit } from 'react-icons/fa';
 import { Link } from "react-router-dom";
-//Poner una función que lleve los paramétros a otra función que los reciba, y esta función llame al modal. Si el coloca "ok" reenvia los parámetros
+import { ModalEliminar } from "./modalEliminar";
+
 let actioncontext = null;
 const MapUsers = props => {
     useEffect(() => {
@@ -11,7 +12,7 @@ const MapUsers = props => {
     }, []);
     function userCompare(infoTicket, infoUser) {
         for (let i = 0; i < infoUser.length; i++) {
-            if (infoUser[i].id_usuarios == infoTicket.id_usuarios) {
+            if (infoUser[i].id_usuarios === infoTicket.id_usuarios) {
                 return infoUser[i].username
             }
         }
@@ -39,9 +40,11 @@ const MapUsers = props => {
                                 </div>
                                 <div className="row">
                                     <div className="col-md-1">
-                                        <p onClick={e => actions.borrarTicket(mapeo.id_ticket, props.history, actions)}>
-                                            <FaTrashAlt />
-                                        </p>
+                                        <ModalEliminar 
+                                            ID={mapeo.id_ticket}
+                                            historia={props.history}
+                                            action={actions}
+                                        />
                                     </div>
                                     <div className="col-md-1">
                                         <Link to={"/editarticket/" + mapeo.id_ticket }>

@@ -21,9 +21,13 @@ const getState = ({ getStore, setStore }) => {
 			},
 			dataID: {},
 			ticketsAdmin: [],
-			dataUsers: []
+			dataUsers: [],
+			valuePower: "Poweeeer"
 		},
 		actions: {
+			valueAux: infovalue => {
+				setStore({ valuePower: infovalue })
+			},
 			auxiliarUser: info => {
 				setStore({ auxUser: info });
 				setStore({ botonOKASE: info.username })
@@ -113,7 +117,7 @@ const getState = ({ getStore, setStore }) => {
 				let oldStore = store.inputTicket
 				oldStore.id_usuarios = store.auxUser.id_usuarios;
 				setStore({ inputTicket: oldStore })
-				fetch(enlace + "editarticket/" + match.params.id , {
+				fetch(enlace + "editarticket/" + match.params.id, {
 					method: "Put",
 					body: JSON.stringify(infoeditar),
 					headers: {
@@ -209,19 +213,25 @@ const getState = ({ getStore, setStore }) => {
 							return;
 						}
 						if (resp.success == true) {
+							setStore({ 
+								inputTicket: {
+									id_usuarios: "",
+									ticket_pedido: ""
+								}
+							 })
 							actions.obtenerTickets();
 							return;
 						}
 					});
 
 			},
-			borrarTicket: (contactoid, redirect, actions) => {
+			borrarTicket: (contactoid, actions) => {
 				fetch(enlace + "ticket/" + contactoid, {
 					method: "DELETE",
 				}).then(resp => {
 					if (resp.ok) {
 						actions.obtenerTickets();
-						alert("El ticket ha sido borrado con éxito");
+						//alert("El ticket ha sido borrado con éxito");
 					}
 				});
 			},

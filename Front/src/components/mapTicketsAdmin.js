@@ -42,6 +42,7 @@ const MapTickets = props => {
                                         name="ticket_pedido"
                                         onChange={e => actions.obtenerTicket(e)}
                                         required
+                                        value={store.inputTicket.ticket_pedido}
                                     />
                                 </div>
                                 <div className="col-md-3 offset-1">
