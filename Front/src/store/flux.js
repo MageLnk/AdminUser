@@ -22,7 +22,6 @@ const getState = ({ getStore, setStore }) => {
 			dataID: {},
 			ticketsAdmin: [],
 			dataUsers: []
-			//resultCompare: []
 		},
 		actions: {
 			auxiliarUser: info => {
@@ -105,8 +104,34 @@ const getState = ({ getStore, setStore }) => {
 						//console.log("Lo que trae el fetch get de la lista todo", resp);
 					});
 			},
-			editarTickets: e => {
-				console.log("Editandooo");
+			editarTickets: (infoeditar, redirect, actions, match) => {
+				const store = getStore();
+				if (store.auxUser == "") {
+					alert("Debe elegir un usuario al cual asignar")
+					return;
+				}
+				let oldStore = store.inputTicket
+				oldStore.id_usuarios = store.auxUser.id_usuarios;
+				setStore({ inputTicket: oldStore })
+				fetch(enlace + "editarticket/" + match.params.id , {
+					method: "Put",
+					body: JSON.stringify(infoeditar),
+					headers: {
+						"Content-Type": "application/json"
+					}
+				})
+					.then(resp => resp.json())
+					.then(resp => {
+						if (resp.success == false) {
+							alert("Ocurrió un problema con el servidor");
+							return;
+						}
+						if (resp.success == true) {
+							redirect.push("/administracion");
+							return;
+						}
+					});
+
 			},
 			loginUsuario: (infologin, redirect) => {
 				fetch(enlace + "logindeusuarios/", {

@@ -116,22 +116,21 @@ userModel.ingresarTicket = (userData, callback) => {
 };
 
 // Las siguienes funciones, son para editar información a través de método PUT
-userModel.updateUser = (userData, callback) => {
+userModel.editarTicket = (userData, callback) => {
     if (connection){
         const sql = `
-            UPDATE users SET
-            username = ${connection.escape(userData.username)},
-            usernametodo = ${connection.escape(userData.usernametodo)},
-            password = ${connection.escape(userData.password)},
-            email = ${connection.escape(userData.email)}
-            WHERE id = ${connection.escape(userData.id)}
+            UPDATE ticket SET
+            id_usuarios = ${connection.escape(userData.id_usuarios)},
+            ticket_pedido = ${connection.escape(userData.ticket_pedido)}
+            WHERE id_ticket = ${connection.escape(userData.id_ticket)}
         `
         connection.query(sql, (err, result) => {
             if (err){
                 throw err;
             } else {
                 callback(null, {
-                    msg:"Información modificada con éxito"
+                    msg:"Información modificada con éxito",
+                    success: true
                 })
             }
         })

@@ -20,7 +20,7 @@ const EditarTickets = props => {
     }
     function handleSubmit(e, actions, store, props) {
         e.preventDefault();
-        actions.editarTickets(store.inputTicket, props.history, actions);
+        actions.editarTickets(store.inputTicket, props.history, actions, props.match);
     };
     return (
         <Context.Consumer>

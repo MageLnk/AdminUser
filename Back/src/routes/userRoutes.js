@@ -99,12 +99,13 @@ module.exports = function (app) {
     });
 
     // Todas las rutas que vienen acá, están asociadas al método PUT
-    app.put('/todo/:id', (request, respond) => {
+    app.put('/editarticket/:id', (request, respond) => {
         const userData = {
-            id: request.params.id,
-            estado: request.body.estado,
+            id_ticket: request.params.id,
+            id_usuarios: request.body.id_usuarios,
+            ticket_pedido: request.body.ticket_pedido,
         }
-        User.updateUserTodo(userData, (err, data) => {
+        User.editarTicket(userData, (err, data) => {
             if (data && data.msg) {
                 respond.json(data)
             } else {
