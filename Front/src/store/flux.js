@@ -21,7 +21,8 @@ const getState = ({ getStore, setStore }) => {
 			},
 			dataID: {},
 			ticketsAdmin: [],
-			dataUsers: []
+			dataUsers: [],
+			dataTickerPorUsuario: []
 		},
 		actions: {
 			cleanInput: evento => {
@@ -72,7 +73,8 @@ const getState = ({ getStore, setStore }) => {
 					dataID: {},
 					ticketsAdmin: [],
 					dataUsers: [],
-				})
+					dataTickerPorUsuario: []
+				},)
 				redirect.push("/");
 			},
 			obtenerDatosLogin: evento => {
@@ -116,6 +118,19 @@ const getState = ({ getStore, setStore }) => {
 					.then(resp => {
 						setStore({
 							dataUsers: resp
+						});
+						//console.log("Lo que trae el fetch get de la lista todo", resp);
+					});
+			},
+			obtenerTicketsByUser: match => {
+				console.log("Viendo match", match.params.id);
+				fetch(enlace + "obtenertickersporusuario/" + match.params.id, {
+					method: "GET",
+				})
+					.then(resp => resp.json())
+					.then(resp => {
+						setStore({
+							dataTickerPorUsuario: resp
 						});
 						//console.log("Lo que trae el fetch get de la lista todo", resp);
 					});
@@ -181,7 +196,7 @@ const getState = ({ getStore, setStore }) => {
 							}
 							if (resp.data.id_tipousuarios == 2) {
 								setStore({ dataID: resp.data.id_usuarios });
-								redirect.push("/tickets/usuario");
+								redirect.push("/tickets/usuario/"+ resp.data.id_usuarios);
 							}
 							return;
 						}

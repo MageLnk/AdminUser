@@ -24,7 +24,7 @@ export class Layout extends React.Component {
 							<Route exact path="/" component={Home} />
 							<Route exact path="/registro" component={Registro} />
 							<Route exact path="/administracion" component={Admin} />
-							<Route exact path="/tickets/usuario" component={Usuarios} />
+							<Route exact path="/tickets/usuario/:id" component={Usuarios} />
 							<Route exact path="/editarticket/:id" component={EditarTickets} />
 							<Route render={() => <h1>Error 404!</h1>} />
 						</Switch>
