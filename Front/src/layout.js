@@ -6,6 +6,7 @@ import Home from "./views/home";
 import Registro from "./views/registro";
 import Admin from "./views/admin";
 import Usuarios from "./views/usuarios";
+import EditarTickets from "./views/editarticket";
 
 // import { Navbar } from "./component/navbar";
 
@@ -24,6 +25,7 @@ export class Layout extends React.Component {
 							<Route exact path="/registro" component={Registro} />
 							<Route exact path="/administracion" component={Admin} />
 							<Route exact path="/tickets/usuario" component={Usuarios} />
+							<Route exact path="/editarticket/:id" component={EditarTickets} />
 							<Route render={() => <h1>Error 404!</h1>} />
 						</Switch>
 				</BrowserRouter>

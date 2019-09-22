@@ -16,6 +16,7 @@ const MapTickets = props => {
         <Context.Consumer>
             {({ store, actions }) => {
                 actioncontext = actions;
+                //Esta variable, trae los nombres de los usuarios, para hacer el botón usuarios más abajo
                 const Usuarios = store.dataUsers.map((mapeo, index) => {
                     return (
                         <div className="contenedorsecundarios container" key={index}>

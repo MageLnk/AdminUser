@@ -60,16 +60,6 @@ const getState = ({ getStore, setStore }) => {
 				})
 				redirect.push("/");
 			},
-/*			userCompare: (infoTicket, infoUser) => {
-				let store = getStore();
-				for (let i = 0; i < infoUser.length; i++) {
-					if(infoUser[i].id_usuarios == infoTicket.id_usuarios){
-						setStore({ resultCompare : infoUser[i].username })
-						console.log("Resultcompare", store.resultCompare);
-						return infoUser[i].username
-					}
-				}
-			},*/
 			obtenerDatosLogin: evento => {
 				const store = getStore();
 				const name = evento.target.name;
@@ -114,6 +104,9 @@ const getState = ({ getStore, setStore }) => {
 						});
 						//console.log("Lo que trae el fetch get de la lista todo", resp);
 					});
+			},
+			editarTickets: e => {
+				console.log("Editandooo");
 			},
 			loginUsuario: (infologin, redirect) => {
 				fetch(enlace + "logindeusuarios/", {
