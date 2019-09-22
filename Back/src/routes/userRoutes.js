@@ -22,6 +22,15 @@ module.exports = function (app) {
             respond.status(200).json(data)
         })
     });
+    app.get('/obtenertickersporusuario/:id', (request, respond) => {
+        const userData = {
+            id_usuarios: request.params.id
+        }
+        console.log("UserData", userData);
+        User.obtenerTickersPorUsuario(userData, (err, data) => {
+            respond.status(200).json(data)
+        })
+    });
 
     // Todas las rutas que vienen acá, están asociadas al método POST
     app.post('/logindeusuarios', (request, respond) => {

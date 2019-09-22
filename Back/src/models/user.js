@@ -67,6 +67,23 @@ userModel.obtenerUsuariosAdministradores = (callback) =>{
         )
     }
 };
+userModel.obtenerTickersPorUsuario = (userData, callback) =>{
+    console.log("Probando el otro userdata", userData);
+    if (connection) {
+        connection.query(
+            `SELECT * FROM ticket 
+            WHERE id_usuarios = ${connection.escape(userData.id_usuarios)}
+            `,
+            (err, rows) => {
+                if (err) {
+                    throw err;
+                } else {
+                    callback(null, rows);
+                }
+            }
+        )
+    }
+};
 userModel.loginDeUsuario = (callback) =>{
     if (connection) {
         connection.query(
