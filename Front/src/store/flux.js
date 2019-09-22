@@ -21,12 +21,24 @@ const getState = ({ getStore, setStore }) => {
 			},
 			dataID: {},
 			ticketsAdmin: [],
-			dataUsers: [],
-			valuePower: "Poweeeer"
+			dataUsers: []
 		},
 		actions: {
+			cleanInput: evento => {
+				setStore({
+					inputTicket: {
+						id_usuarios: "",
+						ticket_pedido: ""
+					},
+				})
+			},
 			valueAux: infovalue => {
-				setStore({ valuePower: infovalue })
+				setStore({
+					inputTicket: {
+						id_usuarios: "",
+						ticket_pedido: infovalue.ticket_pedido
+					},
+				})
 			},
 			auxiliarUser: info => {
 				setStore({ auxUser: info });
@@ -131,6 +143,12 @@ const getState = ({ getStore, setStore }) => {
 							return;
 						}
 						if (resp.success == true) {
+							setStore({
+								inputTicket: {
+									id_usuarios: "",
+									ticket_pedido: ""
+								}
+							})
 							redirect.push("/administracion");
 							return;
 						}
@@ -213,12 +231,12 @@ const getState = ({ getStore, setStore }) => {
 							return;
 						}
 						if (resp.success == true) {
-							setStore({ 
+							setStore({
 								inputTicket: {
 									id_usuarios: "",
 									ticket_pedido: ""
 								}
-							 })
+							})
 							actions.obtenerTickets();
 							return;
 						}

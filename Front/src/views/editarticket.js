@@ -8,28 +8,14 @@ let actioncontext = null;
 let storecontext = null
 
 const EditarTickets = props => {
-/*    let aux = "";
-    let auxfinal = "";
-    function match() {
-        for (let i = 0; i < storecontext.ticketsAdmin.length; i++) {
-            let aux = storecontext.ticketsAdmin[i];
-            if (aux.id_ticket === props.match.params.id) {
-                auxfinal = aux;
-                return;
-            }
-        }
-    }
-*/
 function value(ID, store, actions) {
     for (let i = 0; i < store.ticketsAdmin.length; i++) {
         let aux = store.ticketsAdmin[i];
         if (aux.id_ticket == ID.params.id) {
-            actions.valueAux(aux.ticket_pedido)
+            actions.valueAux(store.ticketsAdmin[i]);
             return;
         }
     }
-    console.log("ID", ID.params.id);
-
 }
     function handleSubmit(e, actions, store, props) {
         e.preventDefault();
@@ -71,7 +57,7 @@ function value(ID, store, actions) {
                         <div className="row">
                             <div className="col-md-3">
                                 <Link to="/administracion">
-                                    <button className="btn btn-danger">
+                                    <button className="btn btn-danger" onClick={e => actions.cleanInput()}>
                                         Volver
                                     </button>
                                 </Link>
@@ -97,7 +83,7 @@ function value(ID, store, actions) {
                                                 name="ticket_pedido"
                                                 onChange={e => actions.obtenerTicket(e)}
                                                 required
-                                                value={store.valuePower}
+                                                value={store.inputTicket.ticket_pedido}
                                             />
                                         </div>
                                         <div className="col-md-3 offset-1">
