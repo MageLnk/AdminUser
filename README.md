@@ -1,4 +1,4 @@
-Este proyecto fue hecho a petición de evaluar ciertas competencias personales, en la cual la solicitud fue crear una base de datos en MySQL, gestionarla con nodeJS y hacer un interfaz con React para poder hacer un panel de control de ticket para un administrador, que detecte si el usuario qe se conectó es admin o usuario. Los usuarios puedan ver los tickets asignados, y finalmente el administrador tenga el CRUD para gestionar los tickets. 
+Este proyecto fue hecho a petición de evaluar ciertas competencias personales, en la cual la solicitud fue crear una base de datos en MySQL, gestionarla con nodeJS y hacer un interfaz con React para poder hacer un panel de control de ticket para un administrador. Las personas se pueden registrar eligiendo ser administradores o usuarios (hecho así con fines de evaluar, evidentemente en un uso real esa opción se saca), que detecte si el usuario qe se conectó es admin o usuario. Los usuarios puedan ver los tickets asignados, y finalmente el administrador tenga el CRUD para gestionar los tickets. 
 
 
 ## INSTRUCCIONES
